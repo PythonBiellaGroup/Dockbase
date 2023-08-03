@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  #Default standard ai python base image
+  ai-python-base:
+    build:
+      dockerfile: ./Docker/python.dockerfile
+      context: .
+    container_name: ai-python-base
+    command: "tail -f /dev/null"
+    restart: always
+    environment:
+      TEST: ${TEST:-"docker-compose dev"}
+  ai-pdm-python-base:
+    build:
+      dockerfile: ./Docker/pdm.dockerfile
+      context: .
+    container_name: ai-pdm-base
+    command: "tail -f /dev/null"
+    restart: always
+    environment:
+      TEST: ${TEST:-"docker-compose dev"}
