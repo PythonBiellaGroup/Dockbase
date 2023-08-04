@@ -34,7 +34,7 @@ jobs:
                 file: ./Docker/python.dockerfile
                 push: true
                 target: final
-                tags: ghcr.io/pythonbiellagroup/python-base:${{ steps.meta.outputs.tags }}
+                tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
             # Custom job to publish the image
             # - name: Build and push python base
