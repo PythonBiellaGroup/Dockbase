@@ -25,7 +25,6 @@ jobs:
             - name: Build and push python base
               run: |
                 docker build ./Docker/python.dockerfile --tag ghcr.io/pythonbiellagroup/python-base:latest
-                docker run ghcr.io/pythonbiellagroup/python-base:${{ steps.meta.outputs.tags }}
                 docker push ghcr.io/pythonbiellagroup/python-base:${{ steps.meta.outputs.tags }}
 
             # - name: Extract metadata (tags, labels) for Docker
