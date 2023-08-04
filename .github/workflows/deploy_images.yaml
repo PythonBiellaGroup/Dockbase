@@ -25,13 +25,14 @@ jobs:
               id: meta
               uses: docker/metadata-action@v3
               with:
-                images: pythonbiellagroup/python-base
+                images: ghcr.io/pythonbiellagroup/dockbase/python-base
       
             - name: Build and push Docker image
-              uses: docker/build-push-action@v3
+              uses: docker/build-push-action@v4
               with:
                 context: .
                 file: ./Docker/python.dockerfile
+                provenance: false
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
