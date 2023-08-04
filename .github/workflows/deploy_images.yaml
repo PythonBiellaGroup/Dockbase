@@ -1,8 +1,8 @@
 name: deploy_images
 on:
-    push
-    # release:
-    #     types: [published]
+    # push
+    release:
+        types: [published]
 
 jobs:
     publish-docker-images:
