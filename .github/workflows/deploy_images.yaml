@@ -20,24 +20,24 @@ jobs:
                 registry: ghcr.io
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
-            
-            # Custom job to publish the image
-            - name: Build and push python base
-              run: |
-                docker build ./Docker/python.dockerfile --tag ghcr.io/pythonbiellagroup/python-base:latest
-                docker push ghcr.io/pythonbiellagroup/python-base:${{ steps.meta.outputs.tags }}
 
-            # - name: Extract metadata (tags, labels) for Docker
-            #   id: meta
-            #   uses: docker/metadata-action@v3
-            #   with:
-            #     images: ghcr.io/pythonbiellagroup/python-base
+            - name: Extract metadata (tags, labels) for Docker
+              id: meta
+              uses: docker/metadata-action@v3
+              with:
+                images: pythonbiellagroup/python-base
       
-            # - name: Build and push Docker image
-            #   uses: docker/build-push-action@v3
-            #   with:
-            #     context: .
-            #     file: ./Docker/python.dockerfile
-            #     push: true
-            #     tags: ${{ steps.meta.outputs.tags }}
-            #     labels: ${{ steps.meta.outputs.labels }}
+            - name: Build and push Docker image
+              uses: docker/build-push-action@v3
+              with:
+                context: .
+                file: ./Docker/python.dockerfile
+                push: true
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+
+            # Custom job to publish the image
+            # - name: Build and push python base
+            #   run: |
+            #     docker build ./Docker/python.dockerfile --tag ghcr.io/pythonbiellagroup/python-base:${{ steps.meta.outputs.tags }}
+            #     docker push ghcr.io/pythonbiellagroup/python-base:${{ steps.meta.outputs.tags }}
