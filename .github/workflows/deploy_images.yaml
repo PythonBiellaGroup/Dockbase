@@ -1,7 +1,8 @@
 name: deploy_images
 on:
-    release:
-        types: [published]
+    push
+    # release:
+    #     types: [published]
 
 jobs:
     publish-docker-images:
@@ -15,35 +16,25 @@ jobs:
             
             - name: Login to GitHub Container Registry
               uses: docker/login-action@v1
-              env:
-                GITHUB_USER: ${{ github.actor }}
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                 registry: ghcr.io
-                username: $GITHUB_USER
+                username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
             
             - name: Extract metadata (tags, labels) for Docker
               id: meta
               uses: docker/metadata-action@v3
               with:
-                images: |
-                    pythonbiellagroup/python-base
-                    ghcr.io/${{ github.repository }}
+                images: ghcr.io/pythonbiellagroup/python-base
       
             - name: Build and push Docker image
-              env:
-                REGISTRY: ghcr.io
-                OWNER: pythonbiellagroup
-                IMAGE_NAME: python-base
               uses: docker/build-push-action@v3
               with:
                 context: .
                 file: ./Docker/python.dockerfile
                 push: true
                 target: final
-                tags: |
-                    $REGISTRY/$OWNER/$IMAGE_NAME:${{ steps.meta.outputs.tags }}
+                tags: ghcr.io/pythonbiellagroup/python-base:${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
             # Custom job to publish the image
             # - name: Build and push python base
